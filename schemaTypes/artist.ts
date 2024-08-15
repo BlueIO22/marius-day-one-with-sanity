@@ -22,7 +22,7 @@ export const artist = defineType({
             name: 'genre',
             title: 'Genre',
             validation: rule => rule.custom((genre, context) => {
-                if (genre=="classical") {
+                if (genre == "classical") {
                     const age = context.document?.age ?? 0
                     return (age as number) > 100 ? true : 'Sorry mate, you have to be over a houndred years to do be a classical artist';
                 }
