@@ -66,8 +66,9 @@ export const eventType = defineType({
         defineField({
             name: 'doorsOpen',
             type: 'number',
+            description: 'How many tickets will be sold at this event?',
             initialValue: 60,
-            validation: rule => rule.custom((value, context) => {
+            validation: rule => rule.custom((value: any, context: any) => {
                  return validateDoorsOpen(value, context);
              })
         }),
