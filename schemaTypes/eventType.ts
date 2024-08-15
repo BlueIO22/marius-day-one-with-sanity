@@ -47,6 +47,7 @@ export const eventType = defineType({
             name: 'slug',
             type: 'slug',
             description: 'URL Slug for this event',
+            validation: rule => rule.required().error("Slug for this event is required"),
             options: {
                 source: 'name',
                 maxLength: 200,
