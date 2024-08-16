@@ -1,4 +1,6 @@
 import { defineField, defineType, SanityClient } from "sanity";
+import { CalendarIcon } from '@sanity/icons'
+import { DoorsOpenInput } from "../components/DoorsOpenInput";
 
 type Venue = {
     name: string;
@@ -11,7 +13,7 @@ async function validateDoorsOpen(value: any, context: any) {
     if (context.document?.venue) {
         const venueRef = venue._ref
         const studioClient: SanityClient = context.getClient({ apiVersion: 'v2023-08-07' })
-        const response = await studioClient.fetch<Venue>(`*[_type=="venue" && _id=="${venueRef}"][0] {maxAmountOfPeople}`)
+        const response = await studioClient.fetch<Venue>(`*[_type=="venueType" && _id=="${venueRef}"][0] {maxAmountOfPeople}`)
         if (doorsOpen > response.maxAmountOfPeople) {
             return 'Since sthe venue has ' + response.maxAmountOfPeople + ', the doors open must be less than this.'
         }
@@ -23,6 +25,7 @@ export const eventType = defineType({
     name: "event",
     title: 'Event',
     type: 'document',
+    icon: CalendarIcon,
     groups: [
         {
             name: 'basic',
@@ -88,7 +91,10 @@ export const eventType = defineType({
             initialValue: 60,
             validation: rule => rule.custom((value: any, context: any) => {
                 return validateDoorsOpen(value, context);
-            })
+            }),
+            components: {
+                input: DoorsOpenInput
+            }
         }),
         defineField({
             name: 'image',
@@ -101,7 +107,7 @@ export const eventType = defineType({
             group: 'basic',
             description: 'Where is this taking place?',
             type: 'reference',
-            to: [{ type: 'venue' }]
+            to: [{ type: 'venueType' }]
         }),
         defineField({
             name: 'artists',
@@ -131,5 +137,31 @@ export const eventType = defineType({
             description: 'Where can i buy tickets for this event?',
             type: 'url'
         })
-    ]
+    ],
+    preview: ({
+        select: {
+            title: "name",
+            image: "image",
+            venue: "venue.name",
+            date: "date"
+        },
+        prepare: ({ title, image, venue, date }) => {
+            const name = title || 'Untitled event'
+            const dateFormatted = date
+                ? new Date(date).toLocaleDateString(undefined, {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                })
+                : 'No date'
+
+            return {
+                title: name,
+                subtitle: venue ? `${dateFormatted} at ${venue}` : dateFormatted,
+                media: image || CalendarIcon,
+            }
+        }
+    })
 })

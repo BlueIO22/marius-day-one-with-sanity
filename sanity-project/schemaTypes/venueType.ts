@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 
 export const venueType = defineType({
-    name: 'venue',
+    name: 'venueType',
     title: 'Venue',
     type: 'document',
     fields: [
@@ -15,5 +15,17 @@ export const venueType = defineType({
             type: 'number',
             validation: rule => rule.required()
         })
-    ]
+    ],
+    preview: {
+        select: {
+            title: "name",
+            maxAmountOfPeople: "maxAmountOfPeople"
+        },
+        prepare: ({ title, maxAmountOfPeople }) => {
+            return {
+                title: title,
+                subtitle: "Max " + maxAmountOfPeople + " at this venue"
+            }
+        }
+    }
 })

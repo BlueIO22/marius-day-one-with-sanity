@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { RobotIcon } from '@sanity/icons'
 
 export const artist = defineType({
     name: 'artist',
@@ -16,6 +17,11 @@ export const artist = defineType({
             name: 'age',
             type: 'number',
             description: 'Age of artist'
+        }),
+        defineField({
+            type: "image",
+            name: "image",
+            description: "What does this artist look like?",
         }),
         defineField({
             type: 'string',
@@ -37,5 +43,19 @@ export const artist = defineType({
                 ]
             }
         })
-    ]
+    ],
+    preview: {
+        select: {
+            title: "name",
+            genre: "genre",
+            image: "image",
+        },
+        prepare: ({ title, genre, image }) => {
+            return {
+                title,
+                subtitle: "is a " + genre + " artist",
+                media: image || RobotIcon
+            }
+        }
+    }
 })
