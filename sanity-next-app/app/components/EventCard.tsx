@@ -2,11 +2,14 @@
 
 import { SanityEvent } from "@/sanity/sanity.types";
 import {
+  faBookReader,
+  faCalendar,
   faClock,
   faExclamationCircle,
   faGlobe,
   faLocation,
   faLocationDot,
+  faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,19 +19,14 @@ import {
   Tooltip,
   Image,
   Button,
+  ButtonGroup,
 } from "@nextui-org/react";
 import dayjs from "dayjs";
 
 export default function EventCard({ event }: { event: SanityEvent }) {
-  const { name, venue, date, slug } = event;
-
-  if (!slug) {
-    return null;
-  }
-
   return (
     <Tooltip
-      placement="bottom-start"
+      placement="right-start"
       content={
         <div className="p-2 backdrop-blur-3xl">
           <p>
@@ -40,26 +38,22 @@ export default function EventCard({ event }: { event: SanityEvent }) {
       }
       className="rounded-none shadow-lg border-2 "
     >
-      <Link href={"/events/" + slug.current}>
-        <Card className="max-h-[600px] hover:shadow-lg ">
-          <Image
-            width="full"
-            className="object-cover object-center"
-            alt="some image"
-            src={event.imageUrl}
-          />
-          <CardHeader className="flex flex-col bg-5 justify-start items-start backdrop-blur-xl absolute top-5 left-5 w-[60%] rounded-lg bg-white text-black">
-            <h2 className="font-bold">{name}</h2>
-            {venue && (
-              <p className="text-xs">
-                <FontAwesomeIcon icon={faLocationDot} /> {venue.name} -{" "}
-                <FontAwesomeIcon icon={faClock} />{" "}
-                {dayjs(date).format("DD.MMMM YYYY")}
+      <Link href={"/events/" + (event.slug?.current ?? "")}>
+        <Card className="w-full shadow-none bg-primary rounded-none text-white">
+          <CardHeader className="flex flex-row justify-between gap-5">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-xl font-bold">{event.name}</h1>
+              <p>
+                <FontAwesomeIcon icon={faLocationDot} /> {event.venue?.name} -{" "}
+                <FontAwesomeIcon icon={faCalendar} />{" "}
+                {dayjs(event.date).format("DD. MMMM YYYY")}
               </p>
-            )}
-            <Button color="primary" variant="shadow" className="mt-2">
-              Buy tickets now!
-            </Button>
+            </div>
+            <div>
+              <Button color="secondary" className="text-white">
+                <FontAwesomeIcon icon={faTicket} /> Buy tickets now!
+              </Button>
+            </div>
           </CardHeader>
         </Card>
       </Link>

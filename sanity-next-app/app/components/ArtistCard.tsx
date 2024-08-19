@@ -1,11 +1,14 @@
 import { Artist } from "@/sanity/sanity.types";
-import { Card, CardHeader, Image } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 
 export default function ArtistCard({ artist }: { artist: Artist }) {
   return (
     <Card className="w-[300px] max-h-[300px]">
       <Image
-        src={artist.imageUrl}
+        src={
+          artist.imageUrl ??
+          "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+        }
         className="object-cover object-center w-full brightness-50"
         alt={artist.name + " image"}
       />

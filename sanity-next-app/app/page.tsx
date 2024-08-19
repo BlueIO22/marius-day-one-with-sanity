@@ -21,7 +21,7 @@ export default async function Home() {
   const events = await fetchLatestEvents();
 
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24">
+    <main className="flex min-h-screen flex-col items-center  p-5">
       <Card className="rounded-none shadow-none p-10">
         <CardHeader className="text-5xl">
           <h1>
@@ -35,9 +35,7 @@ export default async function Home() {
         </CardHeader>
         {events && (
           <>
-            <EventsFilter events={events} />
-
-            <CardBody className="grid grid-cols-3 gap-5 w-full">
+            <CardBody className="flex flex-col gap-5 w-full">
               {events?.map((event, index) => {
                 return <EventCard event={event} key={index} />;
               })}

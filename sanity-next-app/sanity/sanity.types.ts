@@ -77,6 +77,7 @@ export type Artist = {
   name?: string;
   age?: number;
   imageUrl?: string;
+  description?: string;
   image?: {
     asset?: {
       _ref: string;
@@ -92,13 +93,12 @@ export type Artist = {
 };
 
 export type SanityEvent = {
-  _id?: string;
-  _type?: "event";
-  _createdAt?: string;
-  _updatedAt?: string;
-  _rev?: string;
+  _id: string;
+  _type: "event";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   name?: string;
-  imageUrl?: string;
   eventType?:
     | "concert"
     | "art-venue"
@@ -107,6 +107,7 @@ export type SanityEvent = {
   slug?: Slug;
   date?: string;
   doorsOpen?: number;
+  imageUrl?: string;
   image?: {
     asset?: {
       _ref: string;
@@ -119,8 +120,25 @@ export type SanityEvent = {
     _type: "image";
   };
   venue?: VenueType;
-  artists?: Artist[];
-  details?: [];
+  headline?: Artist;
+  details?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   tickets?: string;
 };
 
@@ -131,6 +149,9 @@ export type VenueType = {
   _updatedAt: string;
   _rev: string;
   name?: string;
+
+  city?: string;
+  country?: string;
   maxAmountOfPeople?: number;
 };
 
@@ -204,7 +225,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | Geopoint
   | Artist
-  | SanityEvent
+  | Event
   | VenueType
   | SanityImageCrop
   | SanityImageHotspot

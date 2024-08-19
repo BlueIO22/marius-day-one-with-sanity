@@ -7,7 +7,7 @@ import { token } from "./token";
 
 export const sanityClient = createClient({
   projectId,
-  dataset: "production",
+  dataset: "production-import",
   apiVersion: "2024-07-17",
   useCdn: true,
   stega: {
