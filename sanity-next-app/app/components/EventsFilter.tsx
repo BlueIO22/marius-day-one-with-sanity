@@ -29,7 +29,7 @@ export default function EventsFilter({ events }: { events: SanityEvent[] }) {
   ];
 
   return (
-    <Card className="bg-gray-300 p-5 mb-5 shadow-none rounded-none text-black text-xl flex flex-row justify-between items-center">
+    <Card className="p-5 mb-5 shadow-none rounded-none text-black text-xl flex flex-row justify-between items-center">
       <p>{events.length} upcomming events</p>
       <Select
         items={genres}

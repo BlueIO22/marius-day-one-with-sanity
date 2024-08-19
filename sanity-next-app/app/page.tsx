@@ -1,14 +1,14 @@
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import EventCard from "./components/EventCard";
-import { sanityClient } from "@/sanity/sanity";
+import { sanityFetch } from "@/sanity/sanity";
 import { LATEST_EVENTS_QUERY } from "@/sanity/queries/event";
 import { mapEvent } from "@/sanity/mapper";
 import EventsFilter from "./components/EventsFilter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 async function fetchLatestEvents() {
-  const response = await sanityClient.fetch(LATEST_EVENTS_QUERY);
-
-  console.log(response);
+  const response = await sanityFetch({ query: LATEST_EVENTS_QUERY });
 
   if (!response) {
     return null;
@@ -22,8 +22,12 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center  p-24">
-      <Card className="rounded-none shadow-none p-10 bg-primary text-white">
-        <CardHeader className="text-5xl">Our events</CardHeader>
+      <Card className="rounded-none shadow-none p-10">
+        <CardHeader className="text-5xl">
+          <h1>
+            <FontAwesomeIcon icon={faCalendar} /> Our events
+          </h1>
+        </CardHeader>
       </Card>
       <Card className="rounded-none p-10 bg-white shadow-none  ">
         <CardHeader className="p-0 mb-5">

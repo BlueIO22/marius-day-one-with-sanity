@@ -18,7 +18,8 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type=="event" && slug.current==$slug]
             ...
         },
     artists[]->{
-        ...
+        ...,
+        "imageUrl": image.asset->url
     },
     "imageUrl": image.asset->url
 }`;

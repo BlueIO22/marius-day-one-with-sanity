@@ -76,6 +76,7 @@ export type Artist = {
   _rev: string;
   name?: string;
   age?: number;
+  imageUrl?: string;
   image?: {
     asset?: {
       _ref: string;

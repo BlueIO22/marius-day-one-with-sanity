@@ -1,3 +1,5 @@
+"use client";
+
 import { SanityEvent } from "@/sanity/sanity.types";
 import {
   faClock,

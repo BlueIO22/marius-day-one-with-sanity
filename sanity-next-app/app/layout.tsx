@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {draftMode().isEnabled && (
+          <a
+            href="/api/draft-mode/disable"
+            className="fixed right-0 bottom-0 bg-blue, text-white p-5"
+          >
+            Disable draft mode
+          </a>
+        )}
         <NextUIProvider>{children}</NextUIProvider>
+        {draftMode().isEnabled && <VisualEditing />}
       </body>
     </html>
   );
